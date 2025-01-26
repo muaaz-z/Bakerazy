@@ -3,17 +3,18 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { MainPage } from "./main";
 import { MenuPage } from "./menu";
 import { CustomisePage } from "./customize";
-import { CartProvider } from "./cartcontext"; // Import CartProvider
+import { CartProvider } from "./cartcontext";
+import CheckoutPage from "./checkout";
 
 function MyApp() {
   return (
     <CartProvider>
       <Router>
         <Routes>
-          <Route path="/main" element={<MainPage />} />
+          <Route path="/" element={<MainPage />} />
           <Route path="/menu" element={<MenuPage />} />
           <Route path="/customize" element={<CustomisePage />} />
-          {/* Add other routes */}
+          <Route path="/checkout" element={<CheckoutPage />} />
         </Routes>
       </Router>
     </CartProvider>

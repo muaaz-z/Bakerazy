@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./customize.css";
-import './main';
-import './main.css'
-import { Navbar } from './main';
-
+import "./main";
+import "./main.css";
+import { Navbar } from "./main";
+import { CartContext } from "./cartcontext";
 
 const Customize = () => {
+  const cartContext = useContext(CartContext);
   const [formData, setFormData] = useState({
     flavor: "",
     size: "",
@@ -27,15 +28,23 @@ const Customize = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form Submitted: ", formData);
-    alert("Your custom order has been added to the cart!");
+
+    const cartItem = {
+      id: 10000,
+      name: formData.flavor + " " + formData.size,
+      description:
+        formData.frosting + "\n" + "Delivery: " + formData.deliveryDate,
+      price: 5000,
+      image: formData.referenceImage,
+    };
+    cartContext.addToCart(cartItem);
   };
 
   return (
     <div className="customize-page">
       <form className="customize-form" onSubmit={handleSubmit}>
         <h2>Customize Your Cake</h2>
-        
-        {/* Flavor */}
+
         <label htmlFor="flavor">Flavor:</label>
         <select
           id="flavor"
@@ -44,7 +53,9 @@ const Customize = () => {
           onChange={handleInputChange}
           required
         >
-          <option value="" disabled>Select a flavor</option>
+          <option value="" disabled>
+            Select a flavor
+          </option>
           <option value="vanilla">Vanilla</option>
           <option value="chocolate">Chocolate</option>
           <option value="red-velvet">Red Velvet</option>
@@ -52,7 +63,6 @@ const Customize = () => {
           <option value="custom">Custom</option>
         </select>
 
-        {/* Size */}
         <label htmlFor="size">Size (in pounds):</label>
         <select
           id="size"
@@ -61,14 +71,15 @@ const Customize = () => {
           onChange={handleInputChange}
           required
         >
-          <option value="" disabled>Select size</option>
+          <option value="" disabled>
+            Select size
+          </option>
           <option value="1-pound">1 Pound</option>
           <option value="2-pound">2 Pounds</option>
           <option value="3-pound">3 Pounds</option>
           <option value="custom">Custom Size</option>
         </select>
 
-        {/* Frosting Type */}
         <label htmlFor="frosting">Frosting Type:</label>
         <select
           id="frosting"
@@ -77,7 +88,9 @@ const Customize = () => {
           onChange={handleInputChange}
           required
         >
-          <option value="" disabled>Select frosting</option>
+          <option value="" disabled>
+            Select frosting
+          </option>
           <option value="buttercream">Buttercream</option>
           <option value="fondant">Fondant</option>
           <option value="whipped-cream">Whipped Cream</option>
@@ -85,7 +98,6 @@ const Customize = () => {
           <option value="custom">Custom Frosting</option>
         </select>
 
-        {/* Reference Image */}
         <label htmlFor="referenceImage">Reference Image:</label>
         <input
           type="file"
@@ -95,7 +107,6 @@ const Customize = () => {
           onChange={handleFileChange}
         />
 
-        {/* Other Details */}
         <label htmlFor="otherDetails">Other Details:</label>
         <textarea
           id="otherDetails"
@@ -106,7 +117,6 @@ const Customize = () => {
           placeholder="Enter any special instructions or details..."
         ></textarea>
 
-        {/* Delivery Date */}
         <label htmlFor="deliveryDate">Delivery Date:</label>
         <input
           type="date"
@@ -117,8 +127,9 @@ const Customize = () => {
           required
         />
 
-        {/* Submit Button */}
-        <button type="submit" className="add-to-cart-btn">Add to Cart</button>
+        <button type="submit" className="add-to-cart-btn">
+          Add to Cart
+        </button>
       </form>
     </div>
   );
@@ -127,22 +138,18 @@ const Customize = () => {
 export default Customize;
 
 export function End() {
-    return (
-        <div>
-            <div className="ending-section">
-                {/* Background content can be added here */}
-            </div>
-        </div>
-    );
+  return (
+    <div>
+      <div className="ending-section"></div>
+    </div>
+  );
 }
 export function CustomisePage() {
-    return (
-        <div>
-            <Navbar />
-            <div className="customise-section">
-                {/* Background content can be added here */}
-            </div>
-            <Customize />
-        </div>
-    );
+  return (
+    <div>
+      <Navbar />
+      <div className="customise-section"></div>
+      <Customize />
+    </div>
+  );
 }
